@@ -5,7 +5,7 @@ Gerenciador de Tarefas
 
 ## 👥 Integrantes
 - [Vinicius]  
-- [Melissa]  
+- [Melissa] 
 - [Sergio]  
 - [Andre]  
 - [Paulo]  
