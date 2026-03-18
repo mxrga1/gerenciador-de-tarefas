@@ -3,14 +3,14 @@
 ## Visão Geral
 O Gerenciador de Tarefas é uma aplicação web simples que roda diretamente no navegador.
 
-A aplicação permite criar, visualizar, editar e excluir tarefas, armazenando os dados localmente no navegador usando localStorage (Inicialmente).
+A aplicação permite criar, visualizar, editar e excluir tarefas, armazenando os dados localmente no navegador usando localStorage.
 
 ---
 
 ## Tecnologias Utilizadas
 
 - Frontend: HTML, CSS e JavaScript
-- Armazenamento: localStorage (navegador)
+- Armazenamento: localStorage (Inicialmente)
 
 ---
 
