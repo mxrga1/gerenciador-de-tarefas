@@ -7,7 +7,7 @@ Gerenciador de Tarefas
 - [Vinicius]  
 - [Melissa] 
 - [Sergio]  
-- [Andre]  
+- [André]  
 - [Paulo]  
 
 ## 📖 Descrição do Projeto
