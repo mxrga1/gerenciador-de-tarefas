@@ -8,7 +8,7 @@ Gerenciador de Tarefas
 - [Melissa]  
 - [Sergio]  
 - [Andre]  
-- [Paulo]  
+- []  
 
 ## 📖 Descrição do Projeto
 O **Gerenciador de Tarefas** é uma aplicação web desenvolvida com o objetivo de auxiliar usuários na organização de atividades diárias, permitindo cadastrar, editar, excluir e acompanhar tarefas de forma simples e eficiente.
