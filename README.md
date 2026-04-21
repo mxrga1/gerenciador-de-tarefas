@@ -51,3 +51,24 @@ O projeto será versionado com commits individuais de cada integrante no reposit
 
 ## 🔗 Repositório
 (https://github.com/mxrga1/gerenciador-de-tarefas)
+
+## ▶️ Como Executar o Projeto
+
+### Pré-requisitos
+- Node.js instalado
+- npm 
+
+### Passos
+
+```bash
+# Clone o repositório
+git clone https://github.com/mxrga1/gerenciador-de-tarefas
+
+# Acesse a pasta
+cd gerenciador-de-tarefas
+
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run dev
