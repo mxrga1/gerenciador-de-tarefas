@@ -54,6 +54,11 @@ Persistência de dados com localStorage
 Testes
 Não foram implementados testes automatizados
 Cobertura atual: 0%
+Foram realizados testes manuais para validação do sistema, incluindo:
+- Navegação
+- Funcionalidades principais
+- Persistência de dados (localStorage)
+Resultado: funcionamento conforme esperado.
 Ajustes
 Migração de JavaScript para React
 Melhor organização do código
