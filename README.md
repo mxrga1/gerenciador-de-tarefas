@@ -78,3 +78,11 @@ git clone https://github.com/mxrga1/gerenciador-de-tarefas
 cd gerenciador-de-tarefas
 npm install
 npm run dev
+
+## Testes realizados por Melissa
+
+- Teste de navegação: OK  
+- Teste das funcionalidades principais: OK  
+- Execução do projeto: funcionando corretamente  
+
+Sistema validado com sucesso.
