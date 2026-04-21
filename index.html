@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div class="kb-root">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">
+    Quadro Kanban — gerenciador de tarefas com colunas pendente, em andamento e concluída
+  </h2>
+
+  <!-- Cabeçalho -->
+  <div class="kb-header">
+    <div>
+      <div class="kb-title">Gerenciador de tarefas</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button class="kb-add-btn" style="width:auto; padding:7px 16px; border-style:solid;">+ nova tarefa ↗</button>
+      <span class="kb-badge">8 tarefas</span>
+    </div>
+  </div>
+
+  <!-- Estatísticas -->
+  <div class="kb-stats">
+    <div class="kb-stat">
+      <div class="kb-stat-num">4</div>
+      <div class="kb-stat-label">Pendentes</div>
+    </div>
+    <div class="kb-stat">
+      <div class="kb-stat-num">3</div>
+      <div class="kb-stat-label">Em andamento</div>
+    </div>
+    <div class="kb-stat">
+      <div class="kb-stat-num">1</div>
+      <div class="kb-stat-label">Concluídas</div>
+      <div class="kb-progress-bar">
+        <div class="kb-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Board -->
+  <div class="kb-board">
+
+    <!-- Coluna: Pendente -->
+    <div class="kb-col">
+      <div class="kb-col-header">
+        <div class="kb-dot dot-pending"></div>
+        <span class="kb-col-label">Pendente</span>
+        <span class="kb-count count-pending">4</span>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Cadastro de tarefas</div>
+        <div class="kb-card-desc">Criar formulário para adicionar nova tarefa com título e descrição.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-blue">Frontend</span>
+        </div>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Editar tarefas</div>
+        <div class="kb-card-desc">Alterar título ou descrição de uma tarefa já existente.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-blue">Frontend</span>
+        </div>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Excluir tarefas</div>
+        <div class="kb-card-desc">Remover tarefa da interface e do localStorage.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-gray">CRUD</span>
+        </div>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Responsividade mobile</div>
+        <div class="kb-card-desc">Adaptar layout do Kanban para telas menores.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-gray">CSS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna: Em andamento -->
+    <div class="kb-col">
+      <div class="kb-col-header">
+        <div class="kb-dot dot-progress"></div>
+        <span class="kb-col-label">Em andamento</span>
+        <span class="kb-count count-progress">3</span>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Estrutura HTML base</div>
+        <div class="kb-card-desc">Criar esqueleto da página com as três colunas do Kanban.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-blue">HTML5</span>
+        </div>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Estilização CSS das colunas</div>
+        <div class="kb-card-desc">Definir cores, tipografia e espaçamento do quadro.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-blue">CSS3</span>
+        </div>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Mudança de status</div>
+        <div class="kb-card-desc">Mover tarefas entre colunas via botão ou drag-and-drop.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-amber">Interação</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna: Concluída -->
+    <div class="kb-col">
+      <div class="kb-col-header">
+        <div class="kb-dot dot-done"></div>
+        <span class="kb-col-label">Concluída</span>
+        <span class="kb-count count-done">1</span>
+      </div>
+
+      <div class="kb-card">
+        <div class="kb-card-title">Persistência com localStorage</div>
+        <div class="kb-card-desc">Salvar e recuperar tarefas ao recarregar a página.</div>
+        <div class="kb-card-footer">
+          <span class="kb-tag tag-green">Concluída</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
