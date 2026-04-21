@@ -1,74 +1,80 @@
 # Gerenciador de Tarefas
 
-## 📌 Nome do Projeto
-Gerenciador de Tarefas
+## Integrantes
+- Vinicius  
+- Melissa  
+- Sergio  
+- André  
+- Paulo  
 
-## 👥 Integrantes
-- [Vinicius]  
-- [Melissa] 
-- [Sergio]  
-- [André]  
-- [Paulo]  
+## Descrição
+Aplicação web para organização de tarefas diárias. Permite criar, editar, excluir e acompanhar tarefas de forma simples e eficiente.
 
-## 📖 Descrição do Projeto
-O **Gerenciador de Tarefas** é uma aplicação web desenvolvida com o objetivo de auxiliar usuários na organização de atividades diárias, permitindo cadastrar, editar, excluir e acompanhar tarefas de forma simples e eficiente.
+## Objetivo
+Facilitar o gerenciamento de tarefas pessoais ou em equipe, aumentando a produtividade.
 
-## 🎯 Objetivo Geral
-Desenvolver um sistema intuitivo para melhorar a produtividade e facilitar o controle de tarefas pessoais ou em equipe.
-
-## ⚙️ Tecnologias Utilizadas / Previstas
-- HTML5  
-- CSS3  
+## Tecnologias
+- HTML  
+- CSS  
 - JavaScript  
-- localStorage (armazenamento inicial)  
-- GitHub para versionamento  
+- React (Vite)  
+- localStorage  
+- GitHub  
 
-## 🚀 Funcionalidades Iniciais
+## Funcionalidades
 - Criar tarefas  
 - Editar tarefas  
 - Excluir tarefas  
-- Marcar tarefas como concluídas  
-- Definir prioridade  
+- Alterar status  
+- Persistência com localStorage  
 
-## 📂 Estrutura Inicial do Projeto
+## Estrutura
 ```bash
-gerenciador-de-tarefas/
-│── index.html
-│── style.css
-│── script.js
-│── README.md
-```
+src/
+ └── pages/
+     └── Home/
+         ├── index.jsx
+         ├── style.js
+         └── useTasks.js
+Controle de Versão
 
-## 🔄 Controle de Versão
-O projeto será versionado com commits individuais de cada integrante no repositório.
+Uso de Git e GitHub com commits organizados e utilização de branches.
 
-## 📅 Sprint 1
-- Definição da ideia do projeto  
-- Criação do repositório  
-- Elaboração do Canvas  
-- Desenvolvimento da documentação inicial  
-- Organização da equipe  
+Sprint 1
+Definição do projeto
+Criação do repositório
+Documentação inicial
+Organização da equipe
 
-## 🔗 Repositório
-(https://github.com/mxrga1/gerenciador-de-tarefas)
 
-## ▶️ Como Executar o Projeto
+Sprint 2
+Funcionalidades entregues
+CRUD de tarefas completo
+Persistência de dados com localStorage
+Testes
+Não foram implementados testes automatizados
+Cobertura atual: 0%
+Ajustes
+Migração de JavaScript para React
+Melhor organização do código
 
-### Pré-requisitos
-- Node.js instalado
-- npm 
 
-### Passos
+Sprint 3 (Planejamento)
+Objetivos
+Finalizar o sistema
+Melhorar qualidade do código
+Preparar apresentação
+Próximos passos
+Implementar testes automatizados
+Melhorar interface
+Validar dados de entrada
+Refatorar código
+Repositório
 
-```bash
-# Clone o repositório
+https://github.com/mxrga1/gerenciador-de-tarefas
+
+Como executar
 git clone https://github.com/mxrga1/gerenciador-de-tarefas
-
-# Acesse a pasta
 cd gerenciador-de-tarefas
-
-# Instale as dependências
 npm install
-
-# Rode o projeto
 npm run dev
