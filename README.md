@@ -99,10 +99,3 @@ Sistema validado com sucesso.
 - Execução do projeto: funcionando corretamente  
 
 Sistema validado com sucesso.
-## Testes realizados por Melissa
-
-- Teste de navegação: OK  
-- Teste das funcionalidades principais: OK  
-- Execução do projeto: funcionando corretamente  
-
-Sistema validado com sucesso.
