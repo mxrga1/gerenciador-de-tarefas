@@ -91,3 +91,18 @@ npm run dev
 - Execução do projeto: funcionando corretamente  
 
 Sistema validado com sucesso.
+
+
+## Testes realizados por André
+- Teste de navegação: OK  
+- Teste das funcionalidades principais: OK  
+- Execução do projeto: funcionando corretamente  
+
+Sistema validado com sucesso.
+## Testes realizados por Melissa
+
+- Teste de navegação: OK  
+- Teste das funcionalidades principais: OK  
+- Execução do projeto: funcionando corretamente  
+
+Sistema validado com sucesso.
