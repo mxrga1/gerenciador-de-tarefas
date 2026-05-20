@@ -1,19 +1,27 @@
 import { useState } from "react"; 
 import { useTasks } from "./useTasks";
-import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
+import { KbRoot, KbHeader, KbTitle, HeaderActions, KbAddBtn, KbBadge, KbBoard, KbCol, KbColHeader, KbDot, KbColLabel, KbCard, KbCardTitle, KbCardDesc, KbStats, KbStat, KbStatNum, KbStatLabel, KbProgressBar, KbProgressFill, KbCount, KbForm, KbInput, KbCreateBtn, KbCancelBtn, KbMenuWrapper, KbMenuBtn, KbDropdown, KbDropdownItem, KbCardHeader, KbCardContent } from "./style";
+import { DndContext, closestCenter, useDroppable, DragOverlay } from "@dnd-kit/core";
+import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove} from "@dnd-kit/sortable";
 
-import { KbRoot, KbHeader, KbTitle, HeaderActions, KbAddBtn, KbBadge, KbBoard, KbCol, KbColHeader, KbDot, KbColLabel, KbCard, KbCardTitle, KbCardDesc, KbStats, KbStat, KbStatNum, KbStatLabel, KbProgressBar, KbProgressFill, KbCount, KbForm, KbInput, KbCreateBtn, KbCancelBtn, KbMenuWrapper, KbMenuBtn, KbDropdown, KbDropdownItem, KbCardHeader} from "./style";
+import { CSS } from "@dnd-kit/utilities";
 
 function DraggableTask({ task, children }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: task.id,
-    });
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: task.id,
+  });
 
   const style = {
-    transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
-      : undefined,
+    transform: CSS.Transform.toString(transform),
+    transition,
     opacity: isDragging ? 0.5 : 1,
   };
 
@@ -34,20 +42,67 @@ function DroppableColumn({ id, children }) {
 
 export function Home() {
 
-    const {tasks, showForm, setShowForm, title, setTitle, desc, setDesc, addTask, deleteTask, editTask, startEdit } = useTasks();
+    const { tasks, setTasks, showForm, setShowForm, title, setTitle, desc, setDesc, addTask, deleteTask, editTask, startEdit, cancelEdit } = useTasks();
 
     const pending = tasks.filter(t => t.status === "pending");
     const progress = tasks.filter(t => t.status === "progress");
     const done = tasks.filter(t => t.status === "done");
     const [menuOpen, setMenuOpen] = useState(null);
+    const [activeTask, setActiveTask] = useState(null);
 
-    function handleDragEnd(event) {
-    const { active, over } = event;
+function handleDragEnd(event) {
 
-    if (!over) return;
+  const { active, over } = event;
 
-    editTask(active.id, over.id);
+  if (!over) return;
+
+  setTasks(prev => {
+
+    const activeTask = prev.find(
+      t => t.id === active.id
+    );
+
+    if (!activeTask) return prev;
+
+    // soltou numa coluna
+    if (
+      over.id === "pending" ||
+      over.id === "progress" ||
+      over.id === "done"
+    ) {
+
+      return prev.map(task =>
+        task.id === active.id
+          ? { ...task, status: over.id }
+          : task
+      );
     }
+
+    // soltou em cima de outro card
+    const overTask = prev.find(
+      t => t.id === over.id
+    );
+
+    if (!overTask) return prev;
+
+    const oldIndex = prev.findIndex(
+      t => t.id === active.id
+    );
+
+    const newIndex = prev.findIndex(
+      t => t.id === over.id
+    );
+
+    const updated = [...prev];
+
+    updated[oldIndex] = {
+      ...updated[oldIndex],
+      status: overTask.status
+    };
+
+    return arrayMove(updated, oldIndex, newIndex);
+  });
+}
 
 return (
     <KbRoot>
@@ -85,11 +140,27 @@ return (
         </KbStat>
       </KbStats>
 
-    <DndContext onDragEnd={handleDragEnd}>      
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragStart={({ active }) => {
+        const task = tasks.find(t => t.id === active.id);
+        setActiveTask(task);
+      }}
+      onDragEnd={(event) => {
+        handleDragEnd(event);
+        setActiveTask(null);
+      }}
+      onDragCancel={() => {
+        setActiveTask(null);
+      }}
+    >      
 
       <KbBoard>
 
         <DroppableColumn id="pending">
+
+          <SortableContext items={pending.map(t => t.id)} strategy={verticalListSortingStrategy}>
+
           <KbColHeader>
             <KbDot $variant="pending" />
             <KbColLabel>Pendente</KbColLabel>
@@ -100,16 +171,20 @@ return (
           {pending.map((t, i) => (
         <DraggableTask task={t} key={t.id}>
   {({ listeners, attributes }) => (
-    <KbCard>
+    <KbCard
+    {...listeners}
+    {...attributes}
+    >
       <KbCardHeader>
-        
-        <div {...listeners} {...attributes} style={{ cursor: "grab" }}>
+
+        <KbCardContent>
           <KbCardTitle>{t.title}</KbCardTitle>
           <KbCardDesc>{t.desc}</KbCardDesc>
-        </div>
+        </KbCardContent>
 
-        {/* 👇 MENU (agora funciona normal) */}
-        <KbMenuWrapper>
+    <KbMenuWrapper
+      onPointerDown={(e) => e.stopPropagation()}
+    >
           <KbMenuBtn
             onClick={(e) => {
               e.stopPropagation();
@@ -121,7 +196,12 @@ return (
 
           {menuOpen === t.id && (
             <KbDropdown>
-              <KbDropdownItem onClick={() => startEdit(t.id)}>
+              <KbDropdownItem
+                onClick={() => {
+                  startEdit(t.id);
+                  setMenuOpen(null);
+                }}
+              >
                 Editar
               </KbDropdownItem>
 
@@ -136,16 +216,19 @@ return (
     </KbCard>
   )}
 </DraggableTask>
-            ))}
+  ))}
+    </SortableContext>
 
           {showForm === "pending" ? (
             <KbForm>
                 <KbInput
+                    maxLength={60}
                     placeholder="Título"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
                 <KbInput
+                    maxLength={200}
                     placeholder="Descrição"
                     value={desc}
                     onChange={e => setDesc(e.target.value)}
@@ -154,7 +237,7 @@ return (
                     Criar
                 </KbCreateBtn>
 
-                <KbCancelBtn onClick={() => setShowForm(null)}>
+                <KbCancelBtn onClick={cancelEdit}>
                     Cancelar
                 </KbCancelBtn>
 
@@ -165,6 +248,9 @@ return (
         </DroppableColumn>
 
         <DroppableColumn id="progress">
+
+          <SortableContext items={progress.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          
           <KbColHeader>
             <KbDot $variant="progress" />
             <KbColLabel>Em andamento</KbColLabel>
@@ -175,17 +261,22 @@ return (
           {progress.map((t, i) => (
             <DraggableTask task={t} key={t.id}>
   {({ listeners, attributes }) => (
-    <KbCard>
+    <KbCard
+      {...listeners}
+      {...attributes}
+    >
       <KbCardHeader>
         
         {/* 👇 AREA DE DRAG (só aqui arrasta) */}
-        <div {...listeners} {...attributes} style={{ cursor: "grab" }}>
+        <KbCardContent>
           <KbCardTitle>{t.title}</KbCardTitle>
           <KbCardDesc>{t.desc}</KbCardDesc>
-        </div>
+        </KbCardContent>
 
         {/* 👇 MENU (agora funciona normal) */}
-        <KbMenuWrapper>
+        <KbMenuWrapper
+          onPointerDown={(e) => e.stopPropagation()}
+        >
           <KbMenuBtn
             onClick={(e) => {
               e.stopPropagation();
@@ -197,7 +288,12 @@ return (
 
           {menuOpen === t.id && (
             <KbDropdown>
-              <KbDropdownItem onClick={() => startEdit(t.id)}>
+              <KbDropdownItem
+                onClick={() => {
+                  startEdit(t.id);
+                  setMenuOpen(null);
+                }}
+              >
                 Editar
               </KbDropdownItem>
 
@@ -212,16 +308,19 @@ return (
     </KbCard>
   )}
 </DraggableTask>
-            ))}
+  ))}
+    </SortableContext>
 
           {showForm === "progress" ? (
              <KbForm>
                 <KbInput
+                    maxLength={60}
                     placeholder="Título"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
                 <KbInput
+                    maxLength={200}
                     placeholder="Descrição"
                     value={desc}
                     onChange={e => setDesc(e.target.value)}
@@ -230,7 +329,7 @@ return (
                     Criar
                 </KbCreateBtn>
 
-                <KbCancelBtn onClick={() => setShowForm(null)}>
+                <KbCancelBtn onClick={cancelEdit}>
                     Cancelar
                 </KbCancelBtn>
 
@@ -241,6 +340,9 @@ return (
         </DroppableColumn>
 
         <DroppableColumn id="done">
+
+          <SortableContext items={done.map(t => t.id)} strategy={verticalListSortingStrategy}>
+
           <KbColHeader>
             <KbDot $variant="done" />
             <KbColLabel>Concluída</KbColLabel>
@@ -251,17 +353,20 @@ return (
           {done.map((t, i) => (
         <DraggableTask task={t} key={t.id}>
   {({ listeners, attributes }) => (
-    <KbCard>
+    <KbCard
+      {...listeners}
+      {...attributes}
+    >
       <KbCardHeader>
-        
-        {/* 👇 AREA DE DRAG (só aqui arrasta) */}
-        <div {...listeners} {...attributes} style={{ cursor: "grab" }}>
+
+        <KbCardContent>
           <KbCardTitle>{t.title}</KbCardTitle>
           <KbCardDesc>{t.desc}</KbCardDesc>
-        </div>
+        </KbCardContent>
 
-        {/* 👇 MENU (agora funciona normal) */}
-        <KbMenuWrapper>
+    <KbMenuWrapper
+      onPointerDown={(e) => e.stopPropagation()}
+    >
           <KbMenuBtn
             onClick={(e) => {
               e.stopPropagation();
@@ -273,9 +378,14 @@ return (
 
           {menuOpen === t.id && (
             <KbDropdown>
-              <KbDropdownItem onClick={() => startEdit(t.id)}>
-                Editar
-              </KbDropdownItem>
+            <KbDropdownItem
+              onClick={() => {
+                startEdit(t.id);
+                setMenuOpen(null);
+              }}
+            >
+              Editar
+            </KbDropdownItem>
 
               <KbDropdownItem $danger onClick={() => deleteTask(t.id)}>
                 Excluir
@@ -288,16 +398,19 @@ return (
     </KbCard>
   )}
 </DraggableTask>
-            ))}
+  ))}
+    </SortableContext>
 
           {showForm === "done" ? (
              <KbForm>
                 <KbInput
+                    maxLength={60}
                     placeholder="Título"
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
                 <KbInput
+                    maxLength={200}
                     placeholder="Descrição"
                     value={desc}
                     onChange={e => setDesc(e.target.value)}
@@ -306,7 +419,7 @@ return (
                     Criar
                 </KbCreateBtn>
 
-                <KbCancelBtn onClick={() => setShowForm(null)}>
+                <KbCancelBtn onClick={cancelEdit}>
                     Cancelar
                 </KbCancelBtn>
             </KbForm>
@@ -316,6 +429,19 @@ return (
         </DroppableColumn>
 
       </KbBoard>
+
+      <DragOverlay>
+        {activeTask ? (
+          <KbCard>
+            <KbCardHeader>
+              <KbCardContent>
+                <KbCardTitle>{activeTask.title}</KbCardTitle>
+                <KbCardDesc>{activeTask.desc}</KbCardDesc>
+              </KbCardContent>
+            </KbCardHeader>
+          </KbCard>
+        ) : null}
+      </DragOverlay>
 
       </DndContext>
     </KbRoot>

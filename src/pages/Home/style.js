@@ -132,6 +132,8 @@ export const KbCard = styled.div`
   margin-bottom: 8px;
   cursor: pointer;
   transition: border-color 0.15s;
+  touch-action: none;
+
 
   &:hover {
     border-color: var(--color-border-secondary);
@@ -144,6 +146,9 @@ export const KbCardTitle = styled.div`
   color: var(--color-text-primary);
   line-height: 1.4;
   margin-bottom: 6px;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
 `;
 
 export const KbCardDesc = styled.div`
@@ -151,6 +156,14 @@ export const KbCardDesc = styled.div`
   color: var(--color-text-secondary);
   line-height: 1.5;
   margin-bottom: 8px;
+
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const KbCardFooter = styled.div`
@@ -336,4 +349,8 @@ export const KbDropdownItem = styled.button`
     background: ${({ $danger }) =>
       $danger ? "rgba(239,68,68,0.1)" : "rgba(255,255,255,0.1)"};
   }
+`;
+export const KbCardContent = styled.div`
+  flex: 1;
+  min-width: 0;
 `;
