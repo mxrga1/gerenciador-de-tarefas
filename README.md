@@ -99,3 +99,42 @@ Sistema validado com sucesso.
 - Execução do projeto: funcionando corretamente  
 
 Sistema validado com sucesso.
+
+## BDD (Behavior Driven Development)
+
+Para complementar os testes automatizados já implementados no projeto, foi aplicada a técnica BDD (Behavior Driven Development) na funcionalidade de cadastro de tarefas.
+
+### User Story
+
+- Como usuário do gerenciador de tarefas
+
+- Quero criar uma nova tarefa informando um título
+
+- Para organizar minhas atividades em uma lista de tarefas
+
+### Cenários Implementados
+
+#### Cenário: Criar tarefa com título válido
+
+- Dado que o usuário está cadastrando uma tarefa
+
+- Quando ele informa o título "Estudar JavaScript"
+
+- E salva a tarefa
+
+- Então a tarefa "Estudar JavaScript" deve ser adicionada à lista
+
+#### Cenário: Tentar criar tarefa sem título
+
+- Dado que o usuário está cadastrando uma tarefa
+
+- Quando ele não informa o título
+
+- E tenta salvar a tarefa
+
+- Então nenhuma tarefa deve ser adicionada à lista
+
+### Arquivos
+
+- `features/cadastro_tarefas.feature`
+- `features/step_definitions/cadastro_tarefas.steps.js`
