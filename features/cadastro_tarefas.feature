@@ -8,7 +8,7 @@ Funcionalidade: Cadastro de tarefas
   Cenário: Criar tarefa com título válido
     Dado que o usuário está cadastrando uma tarefa
     Quando ele informa o título "Estudar JavaScript"
-    E salva a tarefas
+    E salva a tarefa
     Então a tarefa "Estudar JavaScript" deve ser adicionada à lista
 
   Cenário: Tentar criar tarefa sem título
