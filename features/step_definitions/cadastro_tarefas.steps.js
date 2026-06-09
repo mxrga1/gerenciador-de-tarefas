@@ -1,5 +1,5 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const assert = require('assert');
+import { Given, When, Then } from '@cucumber/cucumber';
+import assert from 'assert';
 
 Given('que o usuário está cadastrando uma tarefa', function () {
   this.tasks = [];
