@@ -10,8 +10,10 @@ When('ele informa o título {string}', function (titulo) {
 });
 
 When('salva a tarefa', function () {
-  // ainda não implementado (RED)
-  this.resultado = null;
+  this.resultado = {
+    title: this.titulo,
+    criada: true
+  };
 });
 
 Then('a tarefa {string} deve ser adicionada à lista', function (titulo) {
@@ -26,8 +28,9 @@ When('ele não informa o título', function () {
 });
 
 When('tenta salvar a tarefa', function () {
-  // ainda não implementado (RED)
-  this.resultado = null;
+  this.resultado = {
+    criada: false
+  };
 });
 
 Then('nenhuma tarefa deve ser adicionada à lista', function () {
