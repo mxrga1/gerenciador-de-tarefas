@@ -110,6 +110,18 @@ return (
         <KbTitle>Gerenciador de tarefas</KbTitle>
         <HeaderActions>
           <KbBadge>{tasks.length} tarefas</KbBadge>
+
+          <button
+            onClick={() => {
+              localStorage.removeItem(
+                "currentUser"
+              );
+
+              window.location.reload();
+            }}
+          >
+            Sair
+          </button>
         </HeaderActions>
       </KbHeader>
 

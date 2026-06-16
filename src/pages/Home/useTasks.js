@@ -3,10 +3,20 @@ import { useState, useEffect } from "react";
 export function useTasks() {
 
   // 🔹 carrega do localStorage ao iniciar
-  const [tasks, setTasks] = useState(() => {
-    const data = localStorage.getItem("tasks");
-    return data ? JSON.parse(data) : [];
-  });
+const currentUser = JSON.parse(
+  localStorage.getItem("currentUser")
+);
+
+const storageKey = currentUser
+  ? `tasks_${currentUser.id}`
+  : "tasks";
+
+const [tasks, setTasks] = useState(() => {
+  const data =
+    localStorage.getItem(storageKey);
+
+  return data ? JSON.parse(data) : [];
+});
 
 const [showForm, setShowForm] = useState(null);
 const [editingId, setEditingId] = useState(null);
@@ -15,10 +25,12 @@ const [editingId, setEditingId] = useState(null);
 const [title, setTitle] = useState("");
 const [desc, setDesc] = useState("");
 
-  // 🔹 salva automaticamente sempre que mudar
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+useEffect(() => {
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(tasks)
+  );
+}, [tasks, storageKey]);
 
 function addTask(status) {
   if (!title.trim()) return;
