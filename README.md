@@ -100,37 +100,50 @@ Sistema validado com sucesso.
 
 Sistema validado com sucesso.
 
-## BDD (Behavior Driven Development)
+### BDD (Behavior Driven Development)
 
-Para complementar os testes automatizados já implementados no projeto, foi aplicada a técnica BDD (Behavior Driven Development) na funcionalidade de cadastro de tarefas.
+Para complementar os testes automatizados implementados no projeto, foi aplicada a técnica BDD (Behavior Driven Development) para descrever o comportamento esperado das funcionalidades do sistema.
 
-### User Story
+## User Story
 
-- Como usuário do gerenciador de tarefas
+Como usuário do gerenciador de tarefas
 
-- Quero criar uma nova tarefa informando um título
+Quero criar, visualizar e excluir tarefas
 
-- Para organizar minhas atividades em uma lista de tarefas
+Para organizar minhas atividades de forma simples e eficiente.
 
 ### Cenários Implementados
+Cadastro de tarefas
 
-#### Cenário: Criar tarefa com título válido
+##Cenário: Criar tarefa com título válido
 
-- Dado que o usuário está cadastrando uma tarefa
+Dado que o usuário está cadastrando uma tarefa
+Quando ele informa um título válido
+E salva a tarefa
+Então a tarefa deve ser adicionada à lista
 
-- Quando ele informa o título "Estudar JavaScript"
+## Cenário: Tentar criar tarefa sem título
 
-- E salva a tarefa
+Dado que o usuário está cadastrando uma tarefa
+Quando ele não informa um título
+E tenta salvar a tarefa
+Então nenhuma tarefa deve ser adicionada à lista
+Exclusão de tarefas
 
-- Então a tarefa "Estudar JavaScript" deve ser adicionada à lista
+## Cenário: Excluir tarefa existente
 
-#### Cenário: Tentar criar tarefa sem título
+Dado que existe uma tarefa cadastrada
+Quando o usuário exclui a tarefa
+Então a tarefa deve ser removida da lista
 
-- Dado que o usuário está cadastrando uma tarefa
+## Cenário: Lista permanece igual sem exclusão
 
-- Quando ele não informa o título
-
-- E tenta salvar a tarefa
+Dado que existe uma tarefa cadastrada
+Quando o usuário não exclui a tarefa
+Então a tarefa deve permanecer na lista
+Arquivos
+features/cadastro_tarefas.feature
+features/exclusao_tarefas.feature
 
 - Então nenhuma tarefa deve ser adicionada à lista
 
