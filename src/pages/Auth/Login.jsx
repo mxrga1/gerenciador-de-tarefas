@@ -1,30 +1,30 @@
 import { useState } from "react";
 
-export function Login({ onLogin, onRegister }) {
+export function Login({ onLoginSuccess, onRegister, login }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error,    setError]    = useState("");
+  const [loading,  setLoading]  = useState(false);
 
-  function handleLogin() {
-    const users =
-      JSON.parse(localStorage.getItem("users")) || [];
-
-    const user = users.find(
-      u =>
-        u.username === username &&
-        u.password === password
-    );
-
-    if (!user) {
-      alert("Usuário ou senha inválidos");
+  async function handleLogin() {
+    if (!username.trim() || !password) {
+      setError("Preencha usuário e senha");
       return;
     }
+    setError("");
+    setLoading(true);
+    const { error: loginError } = await login(username, password);
+    setLoading(false);
 
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(user)
-    );
+    if (loginError) {
+      setError(loginError);
+      return;
+    }
+    onLoginSuccess();
+  }
 
-    onLogin();
+  function handleKeyDown(e) {
+    if (e.key === "Enter") handleLogin();
   }
 
   return (
@@ -67,12 +67,27 @@ export function Login({ onLogin, onRegister }) {
           Faça login para acessar seu quadro.
         </p>
 
+        {error && (
+          <div
+            style={{
+              background: "#fef2f2",
+              border: "1px solid #fecaca",
+              color: "#b91c1c",
+              borderRadius: "8px",
+              padding: "10px 12px",
+              fontSize: "13px",
+              marginBottom: "12px",
+            }}
+          >
+            {error}
+          </div>
+        )}
+
         <input
           placeholder="Usuário"
           value={username}
-          onChange={(e) =>
-            setUsername(e.target.value)
-          }
+          onChange={(e) => setUsername(e.target.value)}
+          onKeyDown={handleKeyDown}
           style={{
             width: "100%",
             padding: "12px",
@@ -87,9 +102,8 @@ export function Login({ onLogin, onRegister }) {
           type="password"
           placeholder="Senha"
           value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={handleKeyDown}
           style={{
             width: "100%",
             padding: "12px",
@@ -102,18 +116,19 @@ export function Login({ onLogin, onRegister }) {
 
         <button
           onClick={handleLogin}
+          disabled={loading}
           style={{
             width: "100%",
             padding: "12px",
-            background: "#1a1a18",
+            background: loading ? "#5b5b58" : "#1a1a18",
             color: "#fff",
             border: "none",
             borderRadius: "8px",
-            cursor: "pointer",
+            cursor: loading ? "default" : "pointer",
             marginBottom: "12px"
           }}
         >
-          Entrar
+          {loading ? "Entrando..." : "Entrar"}
         </button>
 
         <button
